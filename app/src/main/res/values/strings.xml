@@ -1,0 +1,127 @@
+<resources>
+    <string name="app_name">Wellness Tracker</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Today</string>
+    <string name="nav_activity">Activity</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_map">Map</string>
+
+    <!-- Dashboard -->
+    <string name="greeting">Welcome, %1$s!</string>
+    <string name="greeting_anonymous">Welcome!</string>
+    <string name="wellness_score">Today\'s wellness score: %1$d%%</string>
+    <string name="steps_today">Steps today</string>
+    <string name="steps_goal">Goal: %1$s steps</string>
+    <string name="steps_extra">%1$s km · %2$s kcal burned</string>
+    <string name="add_steps">Add steps</string>
+    <string name="calories">Calories</string>
+    <string name="kcal_value">%1$s kcal burned</string>
+    <string name="calorie_need">Daily energy need: %1$s kcal</string>
+    <string name="water">Water</string>
+    <string name="water_progress">%1$s / %2$s ml</string>
+    <string name="add_water_250">+250 ml</string>
+    <string name="add_water_500">+500 ml</string>
+    <string name="sleep">Sleep</string>
+    <string name="duration_hm">%1$d h %2$d min</string>
+    <string name="log_sleep">Log sleep</string>
+    <string name="sleep_none">No sleep logged yet today.</string>
+    <string name="sleep_poor">Too short — try to get more rest.</string>
+    <string name="sleep_ok">Almost enough, aim for 7–9 hours.</string>
+    <string name="sleep_great">Great result!</string>
+    <string name="sleep_long">Quite long — listen to how you feel.</string>
+
+    <!-- Weather -->
+    <string name="weather">Weather</string>
+    <string name="weather_no_city">Set your city in the profile to see the weather.</string>
+    <string name="weather_loading">Loading…</string>
+    <string name="weather_city_not_found">City not found. Check the spelling in your profile.</string>
+    <string name="weather_error">Could not load the weather. Check your connection.</string>
+    <string name="weather_value">%1$s: %2$d°C, %3$s</string>
+    <string name="wx_clear">clear</string>
+    <string name="wx_partly_cloudy">partly cloudy</string>
+    <string name="wx_cloudy">cloudy</string>
+    <string name="wx_fog">fog</string>
+    <string name="wx_drizzle">drizzle</string>
+    <string name="wx_rain">rain</string>
+    <string name="wx_snow">snow</string>
+    <string name="wx_storm">thunderstorm</string>
+    <string name="wx_unknown">unknown conditions</string>
+
+    <!-- Activity -->
+    <string name="activity_empty">No steps yet. They are counted automatically, or add them manually.</string>
+    <string name="today">Today</string>
+    <string name="day_info">%1$s steps · %2$s km · %3$s kcal</string>
+
+    <!-- Stats -->
+    <string name="stats_steps_chart">Steps over the last 7 days (dashed line = goal)</string>
+    <string name="chart_description">Bar chart of steps for the last seven days</string>
+    <string name="stat_avg_steps">Average steps: %1$s</string>
+    <string name="stat_avg_water">Average water: %1$s ml</string>
+    <string name="stat_avg_sleep">Average sleep: %1$d h %2$d min</string>
+    <string name="stat_total_distance">Distance this week: %1$s km</string>
+    <string name="stat_total_calories">Burned this week: %1$s kcal</string>
+    <string name="stat_goal_days">Step goal reached: %1$d of %2$d days</string>
+    <string name="stat_best_day">Best day: %1$s (%2$s steps)</string>
+    <string name="stat_best_day_none">Best day: no data yet</string>
+
+    <!-- Profile -->
+    <string name="profile_first_run">Fill in your details once — all calculations use them.</string>
+    <string name="label_name">Name</string>
+    <string name="label_age">Age</string>
+    <string name="label_sex">Sex</string>
+    <string name="label_height">Height (cm)</string>
+    <string name="label_weight">Weight (kg)</string>
+    <string name="label_activity">Activity level</string>
+    <string name="label_step_goal">Daily step goal</string>
+    <string name="label_city">City</string>
+    <string name="sex_male">Male</string>
+    <string name="sex_female">Female</string>
+    <string name="activity_sedentary">Sedentary (desk job)</string>
+    <string name="activity_light">Light (exercise 1–3 days/week)</string>
+    <string name="activity_moderate">Moderate (exercise 3–5 days/week)</string>
+    <string name="activity_active">Very active (exercise 6–7 days/week)</string>
+    <string name="save">Save</string>
+    <string name="profile_saved">Profile saved</string>
+    <string name="calculated_for_you">Calculated for you</string>
+    <string name="calc_bmi">BMI: %1$s (%2$s)</string>
+    <string name="calc_bmr">Basal metabolic rate: %1$s kcal/day</string>
+    <string name="calc_calorie_need">Daily energy need: %1$s kcal</string>
+    <string name="calc_water_goal">Water goal: %1$s ml/day</string>
+    <string name="calc_stride">Estimated stride length: %1$d cm</string>
+    <string name="bmi_underweight">underweight</string>
+    <string name="bmi_normal">normal</string>
+    <string name="bmi_overweight">overweight</string>
+    <string name="bmi_obese">obese</string>
+    <string name="error_range">Enter a value from %1$d to %2$d</string>
+
+    <!-- Map -->
+    <string name="map_hint">Find places for training near you. Leave the city empty to search around your current location.</string>
+    <string name="find_gyms">Find gyms</string>
+    <string name="find_parks">Find parks</string>
+    <string name="find_tracks">Find running tracks</string>
+    <string name="query_gyms">gym fitness club</string>
+    <string name="query_parks">park</string>
+    <string name="query_tracks">running track</string>
+    <string name="error_no_maps_app">No maps app or browser found.</string>
+
+    <!-- Dialogs & permissions -->
+    <string name="dialog_add_steps">Add steps</string>
+    <string name="hint_steps">Number of steps</string>
+    <string name="dialog_sleep">Log sleep</string>
+    <string name="hint_sleep_hours">Hours slept (e.g. 7.5)</string>
+    <string name="error_invalid_number">Enter a valid positive number</string>
+    <string name="permission_steps_denied">Without the activity permission, steps can only be added manually.</string>
+    <string name="no_step_sensor">This device has no step counter. Add steps manually.</string>
+
+    <!-- Step counting service notification -->
+    <string name="notification_channel_name">Step counting</string>
+    <string name="notification_title">Wellness Tracker is counting your steps</string>
+    <string name="notification_text">Steps today: %1$s</string>
+
+    <!-- Language switch -->
+    <string name="language_switch">Language</string>
+    <string name="lang_en_short" translatable="false">EN</string>
+    <string name="lang_ru_short" translatable="false">RU</string>
+</resources>

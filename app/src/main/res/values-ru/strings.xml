@@ -1,0 +1,125 @@
+<resources>
+    <string name="app_name">Трекер здоровья</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Сегодня</string>
+    <string name="nav_activity">Активность</string>
+    <string name="nav_stats">Статистика</string>
+    <string name="nav_profile">Профиль</string>
+    <string name="nav_map">Карта</string>
+
+    <!-- Dashboard -->
+    <string name="greeting">Добро пожаловать, %1$s!</string>
+    <string name="greeting_anonymous">Добро пожаловать!</string>
+    <string name="wellness_score">Баллы здоровья сегодня: %1$d%%</string>
+    <string name="steps_today">Шаги сегодня</string>
+    <string name="steps_goal">Цель: %1$s шагов</string>
+    <string name="steps_extra">%1$s км · сожжено %2$s ккал</string>
+    <string name="add_steps">Добавить шаги</string>
+    <string name="calories">Калории</string>
+    <string name="kcal_value">Сожжено %1$s ккал</string>
+    <string name="calorie_need">Суточная потребность: %1$s ккал</string>
+    <string name="water">Вода</string>
+    <string name="water_progress">%1$s / %2$s мл</string>
+    <string name="add_water_250">+250 мл</string>
+    <string name="add_water_500">+500 мл</string>
+    <string name="sleep">Сон</string>
+    <string name="duration_hm">%1$d ч %2$d мин</string>
+    <string name="log_sleep">Записать сон</string>
+    <string name="sleep_none">Сегодня сон ещё не записан.</string>
+    <string name="sleep_poor">Слишком мало — постарайтесь отдохнуть больше.</string>
+    <string name="sleep_ok">Почти достаточно, стремитесь к 7–9 часам.</string>
+    <string name="sleep_great">Отличный результат!</string>
+    <string name="sleep_long">Довольно долго — прислушайтесь к самочувствию.</string>
+
+    <!-- Weather -->
+    <string name="weather">Погода</string>
+    <string name="weather_no_city">Укажите город в профиле, чтобы увидеть погоду.</string>
+    <string name="weather_loading">Загрузка…</string>
+    <string name="weather_city_not_found">Город не найден. Проверьте написание в профиле.</string>
+    <string name="weather_error">Не удалось загрузить погоду. Проверьте подключение.</string>
+    <string name="weather_value">%1$s: %2$d°C, %3$s</string>
+    <string name="wx_clear">ясно</string>
+    <string name="wx_partly_cloudy">переменная облачность</string>
+    <string name="wx_cloudy">пасмурно</string>
+    <string name="wx_fog">туман</string>
+    <string name="wx_drizzle">морось</string>
+    <string name="wx_rain">дождь</string>
+    <string name="wx_snow">снег</string>
+    <string name="wx_storm">гроза</string>
+    <string name="wx_unknown">погода неизвестна</string>
+
+    <!-- Activity -->
+    <string name="activity_empty">Шагов пока нет. Они считаются автоматически, или добавьте их вручную.</string>
+    <string name="today">Сегодня</string>
+    <string name="day_info">%1$s шагов · %2$s км · %3$s ккал</string>
+
+    <!-- Stats -->
+    <string name="stats_steps_chart">Шаги за 7 дней (пунктир — цель)</string>
+    <string name="chart_description">Столбчатая диаграмма шагов за последние семь дней</string>
+    <string name="stat_avg_steps">Среднее число шагов: %1$s</string>
+    <string name="stat_avg_water">Средний объём воды: %1$s мл</string>
+    <string name="stat_avg_sleep">Средний сон: %1$d ч %2$d мин</string>
+    <string name="stat_total_distance">Дистанция за неделю: %1$s км</string>
+    <string name="stat_total_calories">Сожжено за неделю: %1$s ккал</string>
+    <string name="stat_goal_days">Цель по шагам достигнута: %1$d из %2$d дней</string>
+    <string name="stat_best_day">Лучший день: %1$s (%2$s шагов)</string>
+    <string name="stat_best_day_none">Лучший день: данных пока нет</string>
+
+    <!-- Profile -->
+    <string name="profile_first_run">Заполните данные один раз — все расчёты используют их.</string>
+    <string name="label_name">Имя</string>
+    <string name="label_age">Возраст</string>
+    <string name="label_sex">Пол</string>
+    <string name="label_height">Рост (см)</string>
+    <string name="label_weight">Вес (кг)</string>
+    <string name="label_activity">Уровень активности</string>
+    <string name="label_step_goal">Цель по шагам в день</string>
+    <string name="label_city">Город</string>
+    <string name="sex_male">Мужской</string>
+    <string name="sex_female">Женский</string>
+    <string name="activity_sedentary">Сидячий образ жизни</string>
+    <string name="activity_light">Лёгкая (тренировки 1–3 дня в неделю)</string>
+    <string name="activity_moderate">Умеренная (тренировки 3–5 дней в неделю)</string>
+    <string name="activity_active">Высокая (тренировки 6–7 дней в неделю)</string>
+    <string name="save">Сохранить</string>
+    <string name="profile_saved">Профиль сохранён</string>
+    <string name="calculated_for_you">Рассчитано для вас</string>
+    <string name="calc_bmi">ИМТ: %1$s (%2$s)</string>
+    <string name="calc_bmr">Базовый обмен веществ: %1$s ккал/день</string>
+    <string name="calc_calorie_need">Суточная потребность в энергии: %1$s ккал</string>
+    <string name="calc_water_goal">Норма воды: %1$s мл/день</string>
+    <string name="calc_stride">Примерная длина шага: %1$d см</string>
+    <string name="bmi_underweight">недостаточный вес</string>
+    <string name="bmi_normal">норма</string>
+    <string name="bmi_overweight">избыточный вес</string>
+    <string name="bmi_obese">ожирение</string>
+    <string name="error_range">Введите значение от %1$d до %2$d</string>
+
+    <!-- Map -->
+    <string name="map_hint">Найдите места для тренировок рядом. Оставьте город пустым, чтобы искать вокруг вашего местоположения.</string>
+    <string name="find_gyms">Найти фитнес-клубы</string>
+    <string name="find_parks">Найти парки</string>
+    <string name="find_tracks">Найти беговые дорожки</string>
+    <string name="query_gyms">фитнес клуб</string>
+    <string name="query_parks">парк</string>
+    <string name="query_tracks">беговая дорожка</string>
+    <string name="error_no_maps_app">Не найдено приложение карт или браузер.</string>
+
+    <!-- Dialogs & permissions -->
+    <string name="dialog_add_steps">Добавить шаги</string>
+    <string name="hint_steps">Количество шагов</string>
+    <string name="dialog_sleep">Записать сон</string>
+    <string name="hint_sleep_hours">Часов сна (например, 7,5)</string>
+    <string name="error_invalid_number">Введите корректное положительное число</string>
+    <string name="permission_steps_denied">Без разрешения на активность шаги можно добавлять только вручную.</string>
+    <string name="no_step_sensor">На этом устройстве нет шагомера. Добавляйте шаги вручную.</string>
+
+    <!-- Step counting service notification -->
+    <string name="notification_channel_name">Подсчёт шагов</string>
+    <string name="notification_title">Wellness Tracker считает ваши шаги</string>
+    <string name="notification_text">Шагов сегодня: %1$s</string>
+
+    <!-- Language switch -->
+    <string name="language_switch">Язык</string>
+</resources>
