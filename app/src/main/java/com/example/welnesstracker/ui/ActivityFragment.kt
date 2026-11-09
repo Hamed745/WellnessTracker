@@ -24,6 +24,12 @@ class ActivityFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        b.btnWeeklyStats.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, StatsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         b.btnAddSteps.setOnClickListener {
             Dialogs.askNumber(requireContext(), R.string.dialog_add_steps, R.string.hint_steps) {
                 vm.addSteps(it.toInt())
