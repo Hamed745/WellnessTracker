@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.example.welnesstracker.databinding.ActivityMainBinding
 import com.example.welnesstracker.ui.ActivityFragment
 import com.example.welnesstracker.ui.DashboardFragment
+import com.example.welnesstracker.ui.DiaryFragment
 import com.example.welnesstracker.ui.MainViewModel
 import com.example.welnesstracker.ui.MapFragment
 import com.example.welnesstracker.ui.ProfileFragment
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             val fragment: Fragment = when (item.itemId) {
                 R.id.nav_dashboard -> DashboardFragment()
                 R.id.nav_activity -> ActivityFragment()
-                R.id.nav_stats -> StatsFragment()
+                R.id.nav_stats -> DiaryFragment()
                 R.id.nav_profile -> ProfileFragment()
                 R.id.nav_map -> MapFragment()
                 else -> return@setOnItemSelectedListener false

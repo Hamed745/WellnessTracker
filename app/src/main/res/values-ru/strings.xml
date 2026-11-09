@@ -1,4 +1,16 @@
 <resources>
+    <string name="nav_diary">Дневник</string>
+    <string name="open_stats">Статистика за неделю</string>
+    <string name="diary_empty">Записей пока нет. Расскажите о своём самочувствии.</string>
+    <string name="diary_new">Новая запись</string>
+    <string name="diary_edit">Изменить запись</string>
+    <string name="diary_mood">Настроение</string>
+    <string name="diary_note">Как вы себя чувствуете?</string>
+    <string name="diary_delete">Удалить</string>
+    <string name="diary_cancel">Отмена</string>
+    <string name="diary_mood_good">Хорошее</string>
+    <string name="diary_mood_ok">Нормальное</string>
+    <string name="diary_mood_bad">Плохое</string>
     <string name="app_name">Трекер здоровья</string>
 
     <!-- Navigation -->
