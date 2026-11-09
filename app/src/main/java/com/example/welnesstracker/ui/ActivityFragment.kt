@@ -24,12 +24,6 @@ class ActivityFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        b.btnWeeklyStats.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, StatsFragment())
-                .addToBackStack(null)
-                .commit()
-        }
         b.btnAddSteps.setOnClickListener {
             Dialogs.askNumber(requireContext(), R.string.dialog_add_steps, R.string.hint_steps) {
                 vm.addSteps(it.toInt())
@@ -45,6 +39,7 @@ class ActivityFragment : Fragment() {
 
     private fun render(state: UiState) {
         val p = state.profile
+        renderWeek(state)
         val days = state.last(7).reversed() // newest first
         b.tvEmpty.visibility = if (days.all { it.steps == 0 }) View.VISIBLE else View.GONE
 
@@ -59,6 +54,39 @@ class ActivityFragment : Fragment() {
             row.progressDay.setProgressCompat((HealthCalculator.progress(day.steps, p.stepGoal) * 100).toInt(), false)
             b.daysContainer.addView(row.root)
         }
+    }
+
+    /** Weekly chart and summary (steps, water, sleep, distance, calories, goal days, best day). */
+    private fun renderWeek(state: UiState) {
+        val p = state.profile
+        val week = state.last(7) // oldest first
+
+        b.chartSteps.setData(
+            values = week.map { it.steps.toFloat() },
+            labels = week.map { DateUtils.label(it.date, "EEE") },
+            goal = p.stepGoal.toFloat()
+        )
+        b.chartSteps.contentDescription = getString(R.string.chart_description)
+
+        val totalSteps = week.sumOf { it.steps }
+        val totalKm = HealthCalculator.distanceKm(totalSteps, p.heightCm)
+        val totalKcal = HealthCalculator.caloriesBurned(totalSteps, p)
+        val goalDays = week.count { it.steps >= p.stepGoal }
+        val best = week.maxByOrNull { it.steps }
+
+        val avgSteps = HealthCalculator.averageOfRecorded(week.map { it.steps })
+        val avgWater = HealthCalculator.averageOfRecorded(week.map { it.waterMl })
+        val avgSleep = HealthCalculator.averageOfRecorded(week.map { it.sleepMin })
+
+        b.tvAvgSteps.text = getString(R.string.stat_avg_steps, avgSteps.fmt())
+        b.tvAvgWater.text = getString(R.string.stat_avg_water, avgWater.fmt())
+        b.tvAvgSleep.text = getString(R.string.stat_avg_sleep, avgSleep / 60, avgSleep % 60)
+        b.tvTotalDistance.text = getString(R.string.stat_total_distance, totalKm.fmt1())
+        b.tvTotalCalories.text = getString(R.string.stat_total_calories, totalKcal.fmt())
+        b.tvGoalDays.text = getString(R.string.stat_goal_days, goalDays, week.size)
+        b.tvBestDay.text =
+            if (best == null || best.steps == 0) getString(R.string.stat_best_day_none)
+            else getString(R.string.stat_best_day, DateUtils.label(best.date), best.steps.fmt())
     }
 
     override fun onDestroyView() {

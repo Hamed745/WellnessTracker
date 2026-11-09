@@ -9,15 +9,15 @@
         android:icon="@drawable/ic_walk"
         android:title="@string/nav_activity" />
     <item
-        android:id="@+id/nav_stats"
-        android:icon="@drawable/ic_stats"
+        android:id="@+id/nav_diary"
+        android:icon="@drawable/ic_notes"
         android:title="@string/nav_diary" />
-    <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_person"
-        android:title="@string/nav_profile" />
     <item
         android:id="@+id/nav_map"
         android:icon="@drawable/ic_map"
         android:title="@string/nav_map" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_person"
+        android:title="@string/nav_profile" />
 </menu>

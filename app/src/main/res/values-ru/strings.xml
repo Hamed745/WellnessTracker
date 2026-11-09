@@ -1,22 +1,9 @@
 <resources>
-    <string name="nav_diary">Дневник</string>
-    <string name="open_stats">Статистика за неделю</string>
-    <string name="diary_empty">Записей пока нет. Расскажите о своём самочувствии.</string>
-    <string name="diary_new">Новая запись</string>
-    <string name="diary_edit">Изменить запись</string>
-    <string name="diary_mood">Настроение</string>
-    <string name="diary_note">Как вы себя чувствуете?</string>
-    <string name="diary_delete">Удалить</string>
-    <string name="diary_cancel">Отмена</string>
-    <string name="diary_mood_good">Хорошее</string>
-    <string name="diary_mood_ok">Нормальное</string>
-    <string name="diary_mood_bad">Плохое</string>
     <string name="app_name">Трекер здоровья</string>
 
     <!-- Navigation -->
     <string name="nav_dashboard">Сегодня</string>
     <string name="nav_activity">Активность</string>
-    <string name="nav_stats">Статистика</string>
     <string name="nav_profile">Профиль</string>
     <string name="nav_map">Карта</string>
 
@@ -109,10 +96,7 @@
     <string name="error_range">Введите значение от %1$d до %2$d</string>
 
     <!-- Map -->
-    <string name="map_hint">Найдите места для тренировок рядом. Оставьте город пустым, чтобы искать вокруг вашего местоположения.</string>
-    <string name="find_gyms">Найти фитнес-клубы</string>
-    <string name="find_parks">Найти парки</string>
-    <string name="find_tracks">Найти беговые дорожки</string>
+    <string name="map_hint">Выберите категорию и нажмите на метку на карте.</string>
     <string name="query_gyms">фитнес клуб</string>
     <string name="query_parks">парк</string>
     <string name="query_tracks">беговая дорожка</string>
@@ -134,4 +118,44 @@
 
     <!-- Language switch -->
     <string name="language_switch">Язык</string>
+
+    <!-- Diary (SQLite) -->
+    <string name="nav_diary">Дневник</string>
+    <string name="diary_subtitle">Заметки хранятся в локальной базе данных</string>
+    <string name="diary_empty">Записей пока нет. Нажмите «+».</string>
+    <string name="fab_add_note">Новая запись</string>
+    <string name="note_title">Запись</string>
+    <string name="note_mood_label">Как вы себя чувствуете?</string>
+    <string name="note_hint">Текст заметки</string>
+    <string name="note_saved">Запись сохранена</string>
+    <string name="note_deleted">Запись удалена</string>
+    <string name="note_empty_error">Введите текст заметки</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="back">‹ Назад</string>
+
+    <!-- Weather screen -->
+    <string name="weather_place">%1$s · %2$s</string>
+    <string name="weather_api_title">Данные из открытого API Open-Meteo</string>
+
+    <!-- Map screen -->
+    <string name="cat_gyms">Фитнес-клубы</string>
+    <string name="cat_parks">Парки</string>
+    <string name="cat_tracks">Беговые дорожки</string>
+    <string name="map_description">Макет карты с метками мест для тренировок</string>
+    <string name="map_mock_note">Макет карты с примерами мест. Позже здесь может быть настоящая карта (OpenStreetMap / Google Maps).</string>
+    <string name="place_distance">Расстояние: %1$s (пример)</string>
+    <string name="distance_m">%1$d м</string>
+    <string name="distance_km">%1$s км</string>
+    <string name="build_route">Построить маршрут</string>
+    <string name="find_nearby">Искать рядом в приложении карт</string>
+    <string name="place_gym_1">Фитнес-клуб «Атлант»</string>
+    <string name="place_gym_2">Спорткомплекс СФУ</string>
+    <string name="place_gym_3">Зал «Енисей»</string>
+    <string name="place_park_1">Парк «Роев ручей»</string>
+    <string name="place_park_2">Остров Татышев</string>
+    <string name="place_park_3">Центральный парк</string>
+    <string name="place_track_1">Стадион «Енисей»</string>
+    <string name="place_track_2">Беговая дорожка СФУ</string>
+    <string name="place_track_3">Набережная</string>
 </resources>

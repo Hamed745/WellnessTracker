@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -13,52 +14,98 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:text="@string/nav_map"
             android:textAppearance="?attr/textAppearanceHeadlineSmall" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/map_hint"
             android:textAppearance="?attr/textAppearanceBodyMedium" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="?attr/textInputOutlinedStyle"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="@string/label_city">
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etCity"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGyms"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_gyms" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipParks"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_parks" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTracks"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_tracks" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.example.welnesstracker.ui.MapMockView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/map_description" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/placeCard"
+            style="@style/Widget.WellnessTracker.Card"
+            android:layout_marginTop="12dp"
+            android:visibility="gone">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPostalAddress" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvPlaceName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                <TextView
+                    android:id="@+id/tvPlaceDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+                <Button
+                    android:id="@+id/btnRoute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/build_route" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <Button
-            android:id="@+id/btnGyms"
+            android:id="@+id/btnNearby"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/find_gyms" />
+            android:layout_marginTop="4dp"
+            android:text="@string/find_nearby" />
 
-        <Button
-            android:id="@+id/btnParks"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/find_parks" />
-
-        <Button
-            android:id="@+id/btnTracks"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/find_tracks" />
-
+            android:layout_marginTop="8dp"
+            android:text="@string/map_mock_note"
+            android:textAppearance="?attr/textAppearanceBodySmall" />
     </LinearLayout>
 </ScrollView>

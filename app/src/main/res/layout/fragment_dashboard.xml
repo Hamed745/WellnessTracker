@@ -197,8 +197,12 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Weather -->
-        <com.google.android.material.card.MaterialCardView style="@style/Widget.WellnessTracker.Card">
+        <!-- Weather (tap to open the weather screen) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWeather"
+            style="@style/Widget.WellnessTracker.Card"
+            android:clickable="true"
+            android:focusable="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

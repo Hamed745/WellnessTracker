@@ -4,19 +4,6 @@
     <!-- Navigation -->
     <string name="nav_dashboard">Today</string>
     <string name="nav_activity">Activity</string>
-    <string name="nav_stats">Stats</string>
-    <string name="nav_diary">Diary</string>
-    <string name="open_stats">Weekly statistics</string>
-    <string name="diary_empty">No diary notes yet. Add how you feel today.</string>
-    <string name="diary_new">New note</string>
-    <string name="diary_edit">Edit note</string>
-    <string name="diary_mood">Mood</string>
-    <string name="diary_note">How do you feel?</string>
-    <string name="diary_delete">Delete</string>
-    <string name="diary_cancel">Cancel</string>
-    <string name="diary_mood_good">Good</string>
-    <string name="diary_mood_ok">Okay</string>
-    <string name="diary_mood_bad">Bad</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_map">Map</string>
 
@@ -109,10 +96,7 @@
     <string name="error_range">Enter a value from %1$d to %2$d</string>
 
     <!-- Map -->
-    <string name="map_hint">Find places for training near you. Leave the city empty to search around your current location.</string>
-    <string name="find_gyms">Find gyms</string>
-    <string name="find_parks">Find parks</string>
-    <string name="find_tracks">Find running tracks</string>
+    <string name="map_hint">Select a category and tap a pin on the map.</string>
     <string name="query_gyms">gym fitness club</string>
     <string name="query_parks">park</string>
     <string name="query_tracks">running track</string>
@@ -136,4 +120,46 @@
     <string name="language_switch">Language</string>
     <string name="lang_en_short" translatable="false">EN</string>
     <string name="lang_ru_short" translatable="false">RU</string>
+
+    <!-- Diary (SQLite) -->
+    <string name="nav_diary">Diary</string>
+    <string name="diary_subtitle">Notes are stored in a local database</string>
+    <string name="diary_empty">No notes yet. Tap + to add one.</string>
+    <string name="fab_add_note">Add note</string>
+    <string name="note_title">Note</string>
+    <string name="note_mood_label">How do you feel?</string>
+    <string name="note_hint">Note text</string>
+    <string name="note_saved">Note saved</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="note_empty_error">Enter the note text</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="back">‹ Back</string>
+
+    <!-- Weather screen -->
+    <string name="weather_place">%1$s · %2$s</string>
+    <string name="weather_api_title">Data from the open Open-Meteo API</string>
+    <string name="weather_api_request" translatable="false">GET https://api.open-meteo.com/v1/forecast?latitude=…&amp;longitude=…&amp;current=temperature_2m,weather_code</string>
+    <string name="weather_api_response" translatable="false">{ \"current\": { \"temperature_2m\": %1$d, \"weather_code\": %2$d } }</string>
+
+    <!-- Map screen -->
+    <string name="cat_gyms">Gyms</string>
+    <string name="cat_parks">Parks</string>
+    <string name="cat_tracks">Running tracks</string>
+    <string name="map_description">Map mockup with pins for places to train</string>
+    <string name="map_mock_note">Map mockup with example places. A real map (OpenStreetMap / Google Maps) can replace it later.</string>
+    <string name="place_distance">Distance: %1$s (example)</string>
+    <string name="distance_m">%1$d m</string>
+    <string name="distance_km">%1$s km</string>
+    <string name="build_route">Show route</string>
+    <string name="find_nearby">Search nearby in the maps app</string>
+    <string name="place_gym_1">Atlant fitness club</string>
+    <string name="place_gym_2">SibFU sports complex</string>
+    <string name="place_gym_3">Yenisei gym</string>
+    <string name="place_park_1">Roev Ruchey park</string>
+    <string name="place_park_2">Tatyshev Island</string>
+    <string name="place_park_3">Central park</string>
+    <string name="place_track_1">Yenisei stadium</string>
+    <string name="place_track_2">SibFU running track</string>
+    <string name="place_track_3">Embankment</string>
 </resources>

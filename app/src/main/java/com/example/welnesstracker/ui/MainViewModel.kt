@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.welnesstracker.data.DateUtils
 import com.example.welnesstracker.data.DayEntry
+import com.example.welnesstracker.data.Note
+import com.example.welnesstracker.data.NotesDb
 import com.example.welnesstracker.data.UserProfile
 import com.example.welnesstracker.data.WellnessRepository
 import com.example.welnesstracker.network.WeatherService
@@ -53,6 +55,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         super.onCleared()
     }
 
+    private val notesDb = NotesDb(app)
+    private val _notes = MutableLiveData(notesDb.all())
+    val notes: LiveData<List<Note>> = _notes
+
     private val _weather = MutableLiveData<WeatherState>(WeatherState.NoCity)
     val weather: LiveData<WeatherState> = _weather
 
@@ -87,6 +93,19 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setSleepMinutes(minutes: Int) {
         updateToday { it.copy(sleepMin = minutes.coerceIn(0, 24 * 60)) }
+    }
+
+    fun noteById(id: Long): Note? = _notes.value?.firstOrNull { it.id == id }
+
+    /** Creates a note when [id] is negative, otherwise updates the existing one. */
+    fun saveNote(id: Long, text: String, mood: String) {
+        if (id < 0) notesDb.insert(text, mood) else notesDb.update(id, text, mood)
+        _notes.value = notesDb.all()
+    }
+
+    fun deleteNote(id: Long) {
+        notesDb.delete(id)
+        _notes.value = notesDb.all()
     }
 
     fun loadWeather(force: Boolean) {

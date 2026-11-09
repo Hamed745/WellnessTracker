@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.welnesstracker.MainActivity
 import com.example.welnesstracker.R
 import com.example.welnesstracker.databinding.FragmentDashboardBinding
 import com.example.welnesstracker.domain.HealthCalculator
@@ -35,6 +36,10 @@ class DashboardFragment : Fragment() {
             Dialogs.askNumber(requireContext(), R.string.dialog_sleep, R.string.hint_sleep_hours, decimal = true) {
                 vm.setSleepMinutes((it * 60).toInt())
             }
+        }
+
+        b.cardWeather.setOnClickListener {
+            (requireActivity() as MainActivity).showDetail(WeatherFragment())
         }
 
         vm.state.observe(viewLifecycleOwner) { render(it) }
@@ -94,22 +99,9 @@ class DashboardFragment : Fragment() {
             WeatherState.CityNotFound -> getString(R.string.weather_city_not_found)
             WeatherState.Error -> getString(R.string.weather_error)
             is WeatherState.Success -> getString(
-                R.string.weather_value, state.city, state.tempC, getString(weatherDescription(state.code))
+                R.string.weather_value, state.city, state.tempC, getString(weatherDescriptionRes(state.code))
             )
         }
-    }
-
-    @StringRes
-    private fun weatherDescription(code: Int): Int = when (code) {
-        0 -> R.string.wx_clear
-        1, 2 -> R.string.wx_partly_cloudy
-        3 -> R.string.wx_cloudy
-        45, 48 -> R.string.wx_fog
-        in 51..57 -> R.string.wx_drizzle
-        in 61..67, in 80..82 -> R.string.wx_rain
-        in 71..77, 85, 86 -> R.string.wx_snow
-        in 95..99 -> R.string.wx_storm
-        else -> R.string.wx_unknown
     }
 
     override fun onDestroyView() {

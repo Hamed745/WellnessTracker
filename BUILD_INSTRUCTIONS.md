@@ -1,53 +1,39 @@
-# Wellness Tracker — build instructions (Practical Work 2)
+# Wellness Tracker — building the APK from the command line
 
-This repository contains the source code of the Android user interface built with Kotlin, XML layouts, Material components and Android Gradle Plugin. The UI follows the prototype from Practical Work 1: Today, Activity, Diary, Map and Profile. Weekly statistics can be opened from Activity.
+Russian version: [BUILD_RU.md](BUILD_RU.md).
 
 ## Requirements
+- **JDK 17–21** (tested with JDK 21; JDK 25 is not supported by this Gradle version)
+- **Android SDK** with platform 36 and Build-Tools (installed together with Android Studio)
+- Internet access for the first build (Gradle downloads dependencies)
 
-- Android Studio with Android SDK Platform 36 and SDK Build Tools installed
-- JDK 17 or newer (Android Studio's bundled JDK is suitable)
-- Windows PowerShell, or a macOS/Linux terminal
-- Internet access for the first build to download Gradle dependencies
+## Steps (Windows PowerShell)
+```powershell
+git clone https://github.com/Hamed745/WellnessTracker.git
+cd WellnessTracker
 
-## Command-line APK build
+$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot"   # your JDK folder
+$sdk = ("$env:LOCALAPPDATA\Android\Sdk") -replace '\\','/'
+Set-Content -Path local.properties -Value "sdk.dir=$sdk" -Encoding ASCII
 
-1. Clone the public repository and enter it:
+.\gradlew.bat --no-daemon --console=plain assembleDebug
+```
+macOS / Linux: `echo "sdk.dir=$HOME/Android/Sdk" > local.properties && chmod +x gradlew && ./gradlew assembleDebug`.
 
-   ```powershell
-   git clone https://github.com/Hamed745/WellnessTracker.git
-   cd WellnessTracker
-   ```
+The APK is created at `app/build/outputs/apk/debug/app-debug.apk`.
 
-2. Make sure the Android SDK is installed. Android Studio normally generates `local.properties` with `sdk.dir` when you open the project. Alternatively set `ANDROID_HOME` to your Android SDK directory.
+Unit tests: `.\gradlew.bat testDebugUnitTest`.
 
-3. Build the debug APK in PowerShell:
+Install on a phone (USB debugging enabled):
+```powershell
+$adb = "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe"
+& $adb install -r app\build\outputs\apk\debug\app-debug.apk
+& $adb shell am start -n com.example.welnesstracker/.MainActivity
+```
 
-   ```powershell
-   .\gradlew.bat assembleDebug
-   ```
-
-   On macOS/Linux use `./gradlew assembleDebug` instead.
-
-4. Find the generated APK at:
-
-   ```text
-   app/build/outputs/apk/debug/app-debug.apk
-   ```
-
-5. Optionally run unit tests:
-
-   ```powershell
-   .\gradlew.bat testDebugUnitTest
-   ```
-
-6. Optionally install on a connected Android device with USB debugging enabled:
-
-   ```powershell
-   adb install -r app/build/outputs/apk/debug/app-debug.apk
-   ```
-
-## Interface and test data
-
-The interface is implemented with Android XML layout resources (not a web page). On first launch, enter a sample profile, for example: name `Alex`, age `22`, height `175 cm`, weight `70 kg`, city `Krasnoyarsk`. Activity values initially start at zero and can be populated with the **Add steps**, **+250 ml**, and **Log sleep** controls. The diary supports adding, editing and deleting local notes. The map opens an installed map application; weather uses Open-Meteo. Network access is not needed for locally stored activity and diary data.
-
-The app uses real editable local data rather than pretending that sample records were obtained from a server. A step-counter sensor may not be available in an emulator; manual entry is supported.
+## What to look at in the app
+Today · Activity (weekly chart + summary) · Diary (notes in a local SQLite database, add / edit / delete) ·
+Map (static map mockup with example places, tap a pin) · Profile (automatic calculations). Tap the weather card on
+the Today screen to open the weather screen (Open-Meteo API). Use the **EN | RU** switch in the top bar to change
+the language. Activity data starts empty: use the buttons on the Today screen (+500 steps, +250 ml, log sleep) or
+the phone's step counter.

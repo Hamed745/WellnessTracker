@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.welnesstracker.databinding.ActivityMainBinding
 import com.example.welnesstracker.ui.ActivityFragment
 import com.example.welnesstracker.ui.DashboardFragment
@@ -24,7 +25,6 @@ import com.example.welnesstracker.ui.DiaryFragment
 import com.example.welnesstracker.ui.MainViewModel
 import com.example.welnesstracker.ui.MapFragment
 import com.example.welnesstracker.ui.ProfileFragment
-import com.example.welnesstracker.ui.StatsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,11 +57,13 @@ class MainActivity : AppCompatActivity() {
             val fragment: Fragment = when (item.itemId) {
                 R.id.nav_dashboard -> DashboardFragment()
                 R.id.nav_activity -> ActivityFragment()
-                R.id.nav_stats -> DiaryFragment()
+                R.id.nav_diary -> DiaryFragment()
                 R.id.nav_profile -> ProfileFragment()
                 R.id.nav_map -> MapFragment()
                 else -> return@setOnItemSelectedListener false
             }
+            // Switching tabs closes any open detail screen (note editor, weather).
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
                 .commit()
@@ -73,6 +75,14 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigation.selectedItemId =
                 if (viewModel.hasProfile) R.id.nav_dashboard else R.id.nav_profile
         }
+    }
+
+    /** Opens a detail screen on top of the current tab; the Back button returns to the tab. */
+    fun showDetail(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     /** EN | RU switch in the app bar; the activity is recreated with the chosen language. */
