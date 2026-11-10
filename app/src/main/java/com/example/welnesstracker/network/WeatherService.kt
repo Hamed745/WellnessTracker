@@ -14,25 +14,29 @@ sealed class WeatherState {
     data class Success(val tempC: Int, val code: Int, val city: String) : WeatherState()
 }
 
+data class Coordinates(val lat: Double, val lon: Double)
+
 /** Free Open-Meteo APIs (no API key needed). Must be called off the main thread. */
 object WeatherService {
 
+    /** City name -> coordinates (Open-Meteo geocoding). Returns null if the city is not found; throws on network errors. */
+    fun geocode(city: String): Coordinates? {
+        val query = URLEncoder.encode(city, "UTF-8")
+        val geo = JSONObject(
+            httpGet("https://geocoding-api.open-meteo.com/v1/search?name=$query&count=1&format=json")
+        )
+        val results = geo.optJSONArray("results")
+        if (results == null || results.length() == 0) return null
+        val place = results.getJSONObject(0)
+        return Coordinates(place.getDouble("latitude"), place.getDouble("longitude"))
+    }
+
     fun fetch(city: String): WeatherState {
         return try {
-            val query = URLEncoder.encode(city, "UTF-8")
-            val geo = JSONObject(
-                httpGet("https://geocoding-api.open-meteo.com/v1/search?name=$query&count=1&format=json")
-            )
-            val results = geo.optJSONArray("results")
-            if (results == null || results.length() == 0) return WeatherState.CityNotFound
-
-            val place = results.getJSONObject(0)
-            val lat = place.getDouble("latitude")
-            val lon = place.getDouble("longitude")
-
+            val c = geocode(city) ?: return WeatherState.CityNotFound
             val forecast = JSONObject(
                 httpGet(
-                    "https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon" +
+                    "https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}" +
                         "&current=temperature_2m,weather_code"
                 )
             )

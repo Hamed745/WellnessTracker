@@ -12,6 +12,9 @@ import com.example.welnesstracker.data.Note
 import com.example.welnesstracker.data.NotesDb
 import com.example.welnesstracker.data.UserProfile
 import com.example.welnesstracker.data.WellnessRepository
+import com.example.welnesstracker.network.PlaceCategory
+import com.example.welnesstracker.network.PlacesService
+import com.example.welnesstracker.network.PlacesState
 import com.example.welnesstracker.network.WeatherService
 import com.example.welnesstracker.network.WeatherState
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +65,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val _weather = MutableLiveData<WeatherState>(WeatherState.NoCity)
     val weather: LiveData<WeatherState> = _weather
 
+    private val _places = MutableLiveData<PlacesState>(PlacesState.NoCity)
+    val places: LiveData<PlacesState> = _places
+    private var placesKey: String? = null
+    private var placesLoadedAt = 0L
+    private var placesJob: Job? = null
+
     private var weatherCity: String? = null
     private var weatherLoadedAt = 0L
     private var weatherJob: Job? = null
@@ -108,6 +117,43 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         _notes.value = notesDb.all()
     }
 
+    /** Finds sports places near the profile city (geocoding + Overpass API). */
+    fun loadPlaces(category: PlaceCategory, force: Boolean = false) {
+        val city = profile.city.trim()
+        if (city.isEmpty()) {
+            placesJob?.cancel()
+            placesKey = null
+            _places.value = PlacesState.NoCity
+            return
+        }
+        val key = city + "|" + category.name
+        val current = _places.value
+        val fresh = System.currentTimeMillis() - placesLoadedAt < PLACES_TTL_MS
+        if (!force && key == placesKey && (current is PlacesState.Loading ||
+                (current is PlacesState.Success && fresh))
+        ) return
+
+        placesKey = key
+        _places.value = PlacesState.Loading
+        placesJob?.cancel()
+        placesJob = viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    val center = WeatherService.geocode(city)
+                    if (center == null) {
+                        PlacesState.CityNotFound
+                    } else {
+                        PlacesState.Success(center, PlacesService.fetch(center.lat, center.lon, category))
+                    }
+                } catch (e: Exception) {
+                    PlacesState.Error
+                }
+            }
+            placesLoadedAt = System.currentTimeMillis()
+            _places.value = result
+        }
+    }
+
     fun loadWeather(force: Boolean) {
         val city = profile.city.trim()
         if (city.isEmpty()) {
@@ -143,5 +189,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private companion object {
         const val WEATHER_TTL_MS = 30 * 60 * 1000L
+        const val PLACES_TTL_MS = 10 * 60 * 1000L
     }
 }

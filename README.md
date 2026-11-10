@@ -10,7 +10,7 @@ everything from the user's profile.
 - Water goal (35 ml/kg), sleep goal (8 h), daily wellness score
 - Weekly averages, totals, best day and a steps chart (Activity screen)
 
-Weather uses the free Open-Meteo API (no key). The Map tab shows a static map mockup with example places; its buttons open your maps app.
+Weather uses the free Open-Meteo API (no key). The Map tab shows a real OpenStreetMap map (osmdroid) with markers for gyms, parks and running tracks found with the open Overpass API; tap a marker to see its description.
 
 ## Build
 Step-by-step command-line build instructions: [BUILD_RU.md](BUILD_RU.md) (Russian), [BUILD_INSTRUCTIONS.md](BUILD_INSTRUCTIONS.md) (English).
@@ -39,8 +39,9 @@ inside the app (it is remembered); by default the language of the phone is used.
 weather descriptions, dates and the step-counter notification follow the selected language.
 
 ## Screens
-Today, Activity (weekly chart and summary), Diary (notes in a local SQLite database), Map (static map mockup with
-example places), Profile, plus detail screens: note editor and weather (open Open-Meteo API).
+Today, Activity (weekly chart and summary), Diary (notes in a local SQLite database), Map (OpenStreetMap with markers), Profile, plus detail screens: note editor and weather (open Open-Meteo API).
+
+User guide (Russian): [docs/USER_GUIDE_RU.md](docs/USER_GUIDE_RU.md) / [PDF](docs/USER_GUIDE_RU.pdf).
 
 ## Local database (CRUD)
 Diary notes are stored in SQLite (`NotesDb`): `insert` (create), `all` / `get` (read), `update`, `delete`.
