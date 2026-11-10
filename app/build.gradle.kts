@@ -13,8 +13,8 @@ android {
         applicationId = "com.example.welnesstracker"
         minSdk = 24
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.4"
+        versionCode = 6
+        versionName = "1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.osmdroid.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

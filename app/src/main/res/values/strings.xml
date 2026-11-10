@@ -96,7 +96,7 @@
     <string name="error_range">Enter a value from %1$d to %2$d</string>
 
     <!-- Map -->
-    <string name="map_hint">Select a category and tap a pin on the map.</string>
+    <string name="map_hint">Select a category. The map shows nearby places from OpenStreetMap; tap a marker to see its description.</string>
     <string name="query_gyms">gym fitness club</string>
     <string name="query_parks">park</string>
     <string name="query_tracks">running track</string>
@@ -146,20 +146,25 @@
     <string name="cat_gyms">Gyms</string>
     <string name="cat_parks">Parks</string>
     <string name="cat_tracks">Running tracks</string>
-    <string name="map_description">Map mockup with pins for places to train</string>
-    <string name="map_mock_note">Map mockup with example places. A real map (OpenStreetMap / Google Maps) can replace it later.</string>
-    <string name="place_distance">Distance: %1$s (example)</string>
+    <string name="map_description">Map with markers for places to train</string>
+    <string name="place_distance">Distance: %1$s</string>
     <string name="distance_m">%1$d m</string>
     <string name="distance_km">%1$s km</string>
     <string name="build_route">Show route</string>
     <string name="find_nearby">Search nearby in the maps app</string>
-    <string name="place_gym_1">Atlant fitness club</string>
-    <string name="place_gym_2">SibFU sports complex</string>
-    <string name="place_gym_3">Yenisei gym</string>
-    <string name="place_park_1">Roev Ruchey park</string>
-    <string name="place_park_2">Tatyshev Island</string>
-    <string name="place_park_3">Central park</string>
-    <string name="place_track_1">Yenisei stadium</string>
-    <string name="place_track_2">SibFU running track</string>
-    <string name="place_track_3">Embankment</string>
+
+    <!-- Map and places (OpenStreetMap + Overpass API) -->
+    <string name="map_loading">Searching for places nearby…</string>
+    <string name="map_no_city">Set your city in the profile to see places on the map.</string>
+    <string name="map_city_not_found">City not found. Check the spelling in your profile.</string>
+    <string name="map_error">Could not load places. Check your internet connection.</string>
+    <string name="map_empty">No places of this type found nearby.</string>
+    <string name="map_found">Found %1$d places nearby</string>
+    <string name="map_attribution" translatable="false">© OpenStreetMap contributors</string>
+    <string name="nearby_places">Nearby places</string>
+    <string name="place_address">Address: %1$s</string>
+    <string name="place_hours">Opening hours: %1$s</string>
+    <string name="place_phone">Phone: %1$s</string>
+    <string name="place_website">Website: %1$s</string>
+    <string name="place_no_details">No additional details in OpenStreetMap.</string>
 </resources>

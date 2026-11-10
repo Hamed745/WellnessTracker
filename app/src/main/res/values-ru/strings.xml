@@ -96,7 +96,7 @@
     <string name="error_range">Введите значение от %1$d до %2$d</string>
 
     <!-- Map -->
-    <string name="map_hint">Выберите категорию и нажмите на метку на карте.</string>
+    <string name="map_hint">Выберите категорию. На карте показаны ближайшие места из OpenStreetMap; нажмите на метку, чтобы увидеть описание.</string>
     <string name="query_gyms">фитнес клуб</string>
     <string name="query_parks">парк</string>
     <string name="query_tracks">беговая дорожка</string>
@@ -142,20 +142,24 @@
     <string name="cat_gyms">Фитнес-клубы</string>
     <string name="cat_parks">Парки</string>
     <string name="cat_tracks">Беговые дорожки</string>
-    <string name="map_description">Макет карты с метками мест для тренировок</string>
-    <string name="map_mock_note">Макет карты с примерами мест. Позже здесь может быть настоящая карта (OpenStreetMap / Google Maps).</string>
-    <string name="place_distance">Расстояние: %1$s (пример)</string>
+    <string name="map_description">Карта с метками мест для тренировок</string>
+    <string name="place_distance">Расстояние: %1$s</string>
     <string name="distance_m">%1$d м</string>
     <string name="distance_km">%1$s км</string>
     <string name="build_route">Построить маршрут</string>
     <string name="find_nearby">Искать рядом в приложении карт</string>
-    <string name="place_gym_1">Фитнес-клуб «Атлант»</string>
-    <string name="place_gym_2">Спорткомплекс СФУ</string>
-    <string name="place_gym_3">Зал «Енисей»</string>
-    <string name="place_park_1">Парк «Роев ручей»</string>
-    <string name="place_park_2">Остров Татышев</string>
-    <string name="place_park_3">Центральный парк</string>
-    <string name="place_track_1">Стадион «Енисей»</string>
-    <string name="place_track_2">Беговая дорожка СФУ</string>
-    <string name="place_track_3">Набережная</string>
+
+    <!-- Map and places (OpenStreetMap + Overpass API) -->
+    <string name="map_loading">Ищем места рядом…</string>
+    <string name="map_no_city">Укажите город в профиле, чтобы увидеть места на карте.</string>
+    <string name="map_city_not_found">Город не найден. Проверьте написание в профиле.</string>
+    <string name="map_error">Не удалось загрузить места. Проверьте подключение к интернету.</string>
+    <string name="map_empty">Мест этого типа поблизости не найдено.</string>
+    <string name="map_found">Найдено мест рядом: %1$d</string>
+    <string name="nearby_places">Ближайшие места</string>
+    <string name="place_address">Адрес: %1$s</string>
+    <string name="place_hours">Часы работы: %1$s</string>
+    <string name="place_phone">Телефон: %1$s</string>
+    <string name="place_website">Сайт: %1$s</string>
+    <string name="place_no_details">В OpenStreetMap нет дополнительных сведений.</string>
 </resources>

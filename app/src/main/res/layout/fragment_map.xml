@@ -53,12 +53,25 @@
                 android:text="@string/cat_tracks" />
         </com.google.android.material.chip.ChipGroup>
 
-        <com.example.welnesstracker.ui.MapMockView
-            android:id="@+id/mapView"
+        <TextView
+            android:id="@+id/tvMapStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/osmMap"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="320dp"
             android:contentDescription="@string/map_description" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/map_attribution"
+            android:textAppearance="?attr/textAppearanceBodySmall" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/placeCard"
@@ -79,9 +92,10 @@
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <TextView
-                    android:id="@+id/tvPlaceDistance"
+                    android:id="@+id/tvPlaceDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                 <Button
@@ -93,6 +107,22 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <TextView
+            android:id="@+id/tvListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/nearby_places"
+            android:textAppearance="@style/TextAppearance.WellnessTracker.CardTitle"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/placesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
         <Button
             android:id="@+id/btnNearby"
             style="@style/Widget.Material3.Button.OutlinedButton"
@@ -100,12 +130,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/find_nearby" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/map_mock_note"
-            android:textAppearance="?attr/textAppearanceBodySmall" />
     </LinearLayout>
 </ScrollView>
