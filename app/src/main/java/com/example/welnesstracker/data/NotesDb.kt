@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper
 /**
  * Local SQLite database with the diary table:
  * notes(id INTEGER PK, text TEXT, mood TEXT, created_at INTEGER).
+ *
+ * CRUD methods: [insert] (Create), [all] / [get] (Read), [update] (Update), [delete] (Delete).
+ * Pass `name = null` to get an in-memory database (used by the tests).
  */
-class NotesDb(context: Context) :
-    SQLiteOpenHelper(context.applicationContext, DB_NAME, null, DB_VERSION) {
+class NotesDb(context: Context, name: String? = DEFAULT_NAME) :
+    SQLiteOpenHelper(context.applicationContext, name, null, DB_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
@@ -27,7 +30,23 @@ class NotesDb(context: Context) :
         onCreate(db)
     }
 
-    /** SELECT: all notes, newest first. */
+    /** READ one note by id, or null if it does not exist. */
+    fun get(id: Long): Note? {
+        return readableDatabase.query("notes", null, "id = ?", arrayOf(id.toString()), null, null, null).use { c ->
+            if (c.moveToFirst()) {
+                Note(
+                    c.getLong(c.getColumnIndexOrThrow("id")),
+                    c.getString(c.getColumnIndexOrThrow("text")),
+                    c.getString(c.getColumnIndexOrThrow("mood")),
+                    c.getLong(c.getColumnIndexOrThrow("created_at"))
+                )
+            } else {
+                null
+            }
+        }
+    }
+
+    /** READ: all notes, newest first (SELECT). */
     fun all(): List<Note> {
         val result = ArrayList<Note>()
         readableDatabase.query("notes", null, null, null, null, null, "created_at DESC, id DESC").use { c ->
@@ -42,7 +61,7 @@ class NotesDb(context: Context) :
         return result
     }
 
-    /** INSERT */
+    /** CREATE (INSERT): returns the id of the new row. */
     fun insert(text: String, mood: String): Long {
         val values = ContentValues().apply {
             put("text", text)
@@ -52,22 +71,22 @@ class NotesDb(context: Context) :
         return writableDatabase.insert("notes", null, values)
     }
 
-    /** UPDATE */
-    fun update(id: Long, text: String, mood: String) {
+    /** UPDATE: returns the number of changed rows (1 if the note exists). */
+    fun update(id: Long, text: String, mood: String): Int {
         val values = ContentValues().apply {
             put("text", text)
             put("mood", mood)
         }
-        writableDatabase.update("notes", values, "id = ?", arrayOf(id.toString()))
+        return writableDatabase.update("notes", values, "id = ?", arrayOf(id.toString()))
     }
 
-    /** DELETE */
-    fun delete(id: Long) {
-        writableDatabase.delete("notes", "id = ?", arrayOf(id.toString()))
+    /** DELETE: returns the number of removed rows (1 if the note existed). */
+    fun delete(id: Long): Int {
+        return writableDatabase.delete("notes", "id = ?", arrayOf(id.toString()))
     }
 
-    private companion object {
-        const val DB_NAME = "wellness.db"
-        const val DB_VERSION = 1
+    companion object {
+        const val DEFAULT_NAME = "wellness.db"
+        private const val DB_VERSION = 1
     }
 }

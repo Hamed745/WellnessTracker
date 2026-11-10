@@ -41,3 +41,8 @@ weather descriptions, dates and the step-counter notification follow the selecte
 ## Screens
 Today, Activity (weekly chart and summary), Diary (notes in a local SQLite database), Map (static map mockup with
 example places), Profile, plus detail screens: note editor and weather (open Open-Meteo API).
+
+## Local database (CRUD)
+Diary notes are stored in SQLite (`NotesDb`): `insert` (create), `all` / `get` (read), `update`, `delete`.
+The Save / Delete buttons of the note editor call these methods through `MainViewModel`.
+On-device test: `.\gradlew.bat connectedDebugAndroidTest`. Video demo scenario: [VIDEO_RU.md](VIDEO_RU.md).
