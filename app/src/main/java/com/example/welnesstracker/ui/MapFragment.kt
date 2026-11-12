@@ -18,6 +18,7 @@ import com.example.welnesstracker.R
 import com.example.welnesstracker.databinding.FragmentMapBinding
 import com.example.welnesstracker.databinding.ItemPlaceBinding
 import com.example.welnesstracker.network.Place
+import com.example.welnesstracker.network.NetworkIdentity
 import com.example.welnesstracker.network.PlaceCategory
 import com.example.welnesstracker.network.PlacesService
 import com.example.welnesstracker.network.PlacesState
@@ -81,6 +82,8 @@ class MapFragment : Fragment() {
             vm.loadPlaces(category)
         }
 
+        b.btnRetryPlaces.setOnClickListener { vm.loadPlaces(category, force = true) }
+
         b.btnRoute.setOnClickListener {
             val place = places.getOrNull(selected) ?: return@setOnClickListener
             val uri = "geo:${place.lat},${place.lon}?q=${place.lat},${place.lon}(${Uri.encode(place.name)})"
@@ -96,6 +99,7 @@ class MapFragment : Fragment() {
     }
 
     private fun render(state: PlacesState) {
+        b.btnRetryPlaces.visibility = if (state is PlacesState.Error) View.VISIBLE else View.GONE
         when (state) {
             PlacesState.NoCity -> showStatus(R.string.map_no_city)
             PlacesState.Loading -> showStatus(R.string.map_loading)
@@ -266,10 +270,20 @@ class MapFragment : Fragment() {
             val app = context.applicationContext
             val config = Configuration.getInstance()
             config.load(app, app.getSharedPreferences("osmdroid", Context.MODE_PRIVATE))
-            config.userAgentValue = app.packageName
+            // Tile servers must be able to identify this application (not the osmdroid SDK).
+            config.userAgentValue = NetworkIdentity.USER_AGENT
             val base = File(app.cacheDir, "osmdroid")
+            val tiles = File(base, "tiles")
+            // Remove once the old cached 403/blocked placeholder tiles from pre-1.6.1 builds.
+            // Do not delete profile, diary notes or any other application data.
+            val prefs = app.getSharedPreferences("map_cache_version", Context.MODE_PRIVATE)
+            if (prefs.getInt("schema", 0) < 1) {
+                tiles.deleteRecursively()
+                prefs.edit().putInt("schema", 1).apply()
+            }
+            tiles.mkdirs()
             config.osmdroidBasePath = base
-            config.osmdroidTileCache = File(base, "tiles")
+            config.osmdroidTileCache = tiles
         }
     }
 }

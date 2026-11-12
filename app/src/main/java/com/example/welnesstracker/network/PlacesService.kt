@@ -1,10 +1,13 @@
 package com.example.welnesstracker.network
 
+import android.util.Log
 import org.json.JSONObject
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+import java.util.Locale
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -39,8 +42,34 @@ object PlacesService {
 
     private const val RADIUS_M = 3000
     private const val MAX_PLACES = 15
+    private const val TAG = "WellnessPlaces"
+    // Public services, not interchangeable identities: a secondary instance is used only when
+    // the primary service is unavailable (timeouts / 5xx), never after access-denied or rate limits.
+    private val ENDPOINTS = listOf(
+        "https://overpass-api.de/api/interpreter",
+        "https://overpass.private.coffee/api/interpreter"
+    )
 
     fun fetch(lat: Double, lon: Double, category: PlaceCategory): List<Place> {
+        val query = buildQuery(lat, lon, category)
+        var lastError: IOException? = null
+        for ((i, endpoint) in ENDPOINTS.withIndex()) {
+            try {
+                return parse(httpPost(endpoint, query), lat, lon)
+            } catch (e: IOException) {
+                Log.w(TAG, "Overpass request failed (${endpoint.substringBefore("/api/")}): ${e.message}")
+                // Never switch providers to get around a provider's 4xx/429 restrictions.
+                if (e is HttpError && e.status in 400..499) throw e
+                lastError = e
+                if (i == ENDPOINTS.lastIndex) break
+            }
+        }
+        throw lastError ?: IOException("Overpass unavailable")
+    }
+
+    /** Public for JVM unit tests: query contains no personal data, only chosen city coordinates. */
+    internal fun buildQuery(lat: Double, lon: Double, category: PlaceCategory): String {
+        require(lat.isFinite() && lon.isFinite() && lat in -90.0..90.0 && lon in -180.0..180.0)
         val around = "(around:$RADIUS_M,$lat,$lon)"
         val filters = when (category) {
             PlaceCategory.GYMS -> listOf("[\"leisure\"~\"^(fitness_centre|sports_centre)$\"][\"name\"]")
@@ -52,9 +81,7 @@ object PlacesService {
             )
         }
         val body = filters.joinToString("") { "nwr$it$around;" }
-        val query = "[out:json][timeout:20];($body);out center 60;"
-        val url = "https://overpass-api.de/api/interpreter?data=" + URLEncoder.encode(query, "UTF-8")
-        return parse(httpGet(url), lat, lon)
+        return "[out:json][timeout:20];($body);out center 60;"
     }
 
     private fun parse(text: String, centerLat: Double, centerLon: Double): List<Place> {
@@ -88,7 +115,7 @@ object PlacesService {
                 phone = tags.optString("phone", tags.optString("contact:phone")),
                 website = tags.optString("website", tags.optString("contact:website"))
             )
-            found.putIfAbsent("$name|${"%.3f".format(lat)}|${"%.3f".format(lon)}", place)
+            found.putIfAbsent("$name|${String.format(Locale.US, "%.3f", lat)}|${String.format(Locale.US, "%.3f", lon)}", place)
         }
         return found.values
             .sortedBy { distanceMeters(centerLat, centerLon, it.lat, it.lon) }
@@ -106,14 +133,23 @@ object PlacesService {
         return 2 * r * atan2(sqrt(a), sqrt(1 - a))
     }
 
-    private fun httpGet(url: String): String {
-        val conn = URL(url).openConnection() as HttpURLConnection
+    private class HttpError(val status: Int) : IOException("HTTP $status")
+
+    /** POST avoids long URLs, sets explicit identification, and sends only an Overpass query. */
+    private fun httpPost(endpoint: String, query: String): String {
+        val conn = URL(endpoint).openConnection() as HttpURLConnection
         try {
-            conn.connectTimeout = 10_000
-            conn.readTimeout = 30_000
-            conn.requestMethod = "GET"
-            conn.setRequestProperty("User-Agent", "WellnessTracker/1.5 (student project)")
-            if (conn.responseCode !in 200..299) throw IOException("HTTP ${conn.responseCode}")
+            conn.connectTimeout = 12_000
+            conn.readTimeout = 35_000
+            conn.requestMethod = "POST"
+            conn.doOutput = true
+            conn.setRequestProperty("User-Agent", NetworkIdentity.USER_AGENT)
+            conn.setRequestProperty("Accept", "application/json")
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+            val body = "data=" + URLEncoder.encode(query, StandardCharsets.UTF_8.name())
+            conn.outputStream.use { it.write(body.toByteArray(StandardCharsets.UTF_8)) }
+            val status = conn.responseCode
+            if (status !in 200..299) throw HttpError(status)
             return conn.inputStream.bufferedReader().use { it.readText() }
         } finally {
             conn.disconnect()

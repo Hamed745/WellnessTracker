@@ -60,6 +60,15 @@
             android:layout_marginBottom="8dp"
             android:textAppearance="?attr/textAppearanceBodyMedium" />
 
+        <Button
+            android:id="@+id/btnRetryPlaces"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/map_retry"
+            android:visibility="gone" />
+
         <org.osmdroid.views.MapView
             android:id="@+id/osmMap"
             android:layout_width="match_parent"
