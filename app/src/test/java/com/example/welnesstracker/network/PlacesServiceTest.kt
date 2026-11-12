@@ -14,8 +14,8 @@ class PlacesServiceTest {
         assertTrue(parks.contains("[\"leisure\"=\"park\"]"))
         assertTrue(tracks.contains("athletics"))
         assertTrue(tracks.contains("stadium"))
-        assertTrue(parks.contains("(around:3000,56.0,92.0)"))
-        assertTrue(parks.contains("out center 60;"))
+        assertTrue(parks.contains("(around:8000,56.0,92.0)"))
+        assertTrue(parks.contains("out center 150;"))
     }
 
     @Test(expected = IllegalArgumentException::class)

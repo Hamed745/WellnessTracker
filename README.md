@@ -56,7 +56,7 @@ On-device test: `.\gradlew.bat connectedDebugAndroidTest`. Video demo scenario: 
 Built-in protection: data stays on the phone, backups are disabled, HTTPS-only networking, parameterized SQL,
 minimal permissions and a "Delete all my data" button in the profile.
 
-## Map reliability (v1.6.2)
+## Map reliability (v1.6.3)
 The Map tab uses OpenTopoMap raster tiles (HTTPS, with map-style attribution), identifies WellnessTracker in tile/API requests, keeps the osmdroid
 local tile cache, and offers an in-app retry for nearby places. Nearby place requests use
 HTTP POST to Overpass; if the primary server is temporarily unavailable (timeout/5xx), a

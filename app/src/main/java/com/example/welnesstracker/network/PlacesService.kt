@@ -40,14 +40,14 @@ sealed class PlacesState {
  */
 object PlacesService {
 
-    private const val RADIUS_M = 3000
-    private const val MAX_PLACES = 15
+    private const val RADIUS_M = 8000
+    private const val MAX_PLACES = 25
     private const val TAG = "WellnessPlaces"
-    // Public services, not interchangeable identities: a secondary instance is used only when
-    // the primary service is unavailable (timeouts / 5xx), never after access-denied or rate limits.
+    // Private.coffee explicitly permits use by third-party applications. A second provider
+    // is attempted only on network/5xx failure; never to evade an access denial or rate limit.
     private val ENDPOINTS = listOf(
-        "https://overpass-api.de/api/interpreter",
-        "https://overpass.private.coffee/api/interpreter"
+        "https://overpass.private.coffee/api/interpreter",
+        "https://overpass-api.de/api/interpreter"
     )
 
     fun fetch(lat: Double, lon: Double, category: PlaceCategory): List<Place> {
@@ -55,7 +55,7 @@ object PlacesService {
         var lastError: IOException? = null
         for ((i, endpoint) in ENDPOINTS.withIndex()) {
             try {
-                return parse(httpPost(endpoint, query), lat, lon)
+                return parse(httpPost(endpoint, query), lat, lon, category)
             } catch (e: IOException) {
                 Log.w(TAG, "Overpass request failed (${endpoint.substringBefore("/api/")}): ${e.message}")
                 // Never switch providers to get around a provider's 4xx/429 restrictions.
@@ -72,26 +72,37 @@ object PlacesService {
         require(lat.isFinite() && lon.isFinite() && lat in -90.0..90.0 && lon in -180.0..180.0)
         val around = "(around:$RADIUS_M,$lat,$lon)"
         val filters = when (category) {
-            PlaceCategory.GYMS -> listOf("[\"leisure\"~\"^(fitness_centre|sports_centre)$\"][\"name\"]")
-            PlaceCategory.PARKS -> listOf("[\"leisure\"=\"park\"][\"name\"]")
+            PlaceCategory.GYMS -> listOf(
+                "[\"leisure\"~\"^(fitness_centre|sports_centre)$\"]",
+                "[\"sport\"=\"fitness\"]",
+                "[\"amenity\"=\"gym\"]"
+            )
+            PlaceCategory.PARKS -> listOf("[\"leisure\"=\"park\"]")
             PlaceCategory.TRACKS -> listOf(
-                "[\"leisure\"=\"track\"][\"name\"]",
-                "[\"sport\"=\"athletics\"][\"name\"]",
-                "[\"leisure\"=\"stadium\"][\"name\"]"
+                "[\"leisure\"=\"track\"]",
+                "[\"sport\"=\"athletics\"]",
+                "[\"leisure\"=\"stadium\"]"
             )
         }
         val body = filters.joinToString("") { "nwr$it$around;" }
-        return "[out:json][timeout:20];($body);out center 60;"
+        return "[out:json][timeout:25];($body);out center 150;"
     }
 
-    private fun parse(text: String, centerLat: Double, centerLon: Double): List<Place> {
+    private fun parse(text: String, centerLat: Double, centerLon: Double, category: PlaceCategory): List<Place> {
         val elements = JSONObject(text).optJSONArray("elements") ?: return emptyList()
         val found = LinkedHashMap<String, Place>()
         for (i in 0 until elements.length()) {
             val el = elements.getJSONObject(i)
             val tags = el.optJSONObject("tags") ?: continue
-            val name = tags.optString("name").trim()
-            if (name.isEmpty()) continue
+            val name = tags.optString("name").trim().ifEmpty {
+                // An unnamed real OSM feature still has coordinates and is useful as a pin.
+                // Never invent a place: the description explicitly marks the name as missing.
+                when (category) {
+                    PlaceCategory.GYMS -> "Fitness facility (unnamed)"
+                    PlaceCategory.PARKS -> "Park (unnamed)"
+                    PlaceCategory.TRACKS -> "Running track (unnamed)"
+                }
+            }
 
             val lat: Double
             val lon: Double

@@ -155,7 +155,7 @@
     <string name="map_city_not_found">Город не найден. Проверьте написание в профиле.</string>
     <string name="map_error">Не удалось загрузить места. Проверьте подключение к интернету.</string>
     <string name="map_retry">Повторить поиск мест</string>
-    <string name="map_empty">Мест этого типа поблизости не найдено.</string>
+    <string name="map_empty">На карте OSM нет подходящих мест в радиусе 8 км. Выберите другую категорию или город.</string>
     <string name="map_found">Найдено мест рядом: %1$d</string>
     <string name="nearby_places">Ближайшие места</string>
     <string name="place_address">Адрес: %1$s</string>
