@@ -23,7 +23,7 @@ import com.example.welnesstracker.network.PlaceCategory
 import com.example.welnesstracker.network.PlacesService
 import com.example.welnesstracker.network.PlacesState
 import org.osmdroid.config.Configuration
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
 import java.io.File
@@ -58,7 +58,12 @@ class MapFragment : Fragment() {
             selected = savedInstanceState.getInt(KEY_SELECTED, -1)
         }
 
-        b.osmMap.setTileSource(TileSourceFactory.MAPNIK)
+        // Use a distinct permitted OSM-derived service instead of the blocked OSMF tile server.
+        // OpenTopoMap allows small embedded projects with attribution (CC BY-SA map style).
+        b.osmMap.setTileSource(XYTileSource(
+            "OpenTopoMap", 0, 17, 256, ".png",
+            arrayOf("https://tile.opentopomap.org/")
+        ))
         b.osmMap.setMultiTouchControls(true)
         b.osmMap.controller.setZoom(DEFAULT_ZOOM)
         b.osmMap.controller.setCenter(GeoPoint(DEFAULT_LAT, DEFAULT_LON))
@@ -274,12 +279,12 @@ class MapFragment : Fragment() {
             config.userAgentValue = NetworkIdentity.USER_AGENT
             val base = File(app.cacheDir, "osmdroid")
             val tiles = File(base, "tiles")
-            // Remove once the old cached 403/blocked placeholder tiles from pre-1.6.1 builds.
+            // Remove cached OSMF 403/blocked placeholder tiles from versions before 1.6.2.
             // Do not delete profile, diary notes or any other application data.
             val prefs = app.getSharedPreferences("map_cache_version", Context.MODE_PRIVATE)
-            if (prefs.getInt("schema", 0) < 1) {
+            if (prefs.getInt("schema", 0) < 2) {
                 tiles.deleteRecursively()
-                prefs.edit().putInt("schema", 1).apply()
+                prefs.edit().putInt("schema", 2).apply()
             }
             tiles.mkdirs()
             config.osmdroidBasePath = base
