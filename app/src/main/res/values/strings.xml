@@ -161,7 +161,7 @@
     <string name="map_retry">Retry nearby search</string>
     <string name="map_empty">No places of this type found nearby.</string>
     <string name="map_found">Found %1$d places nearby</string>
-    <string name="map_attribution" translatable="false">© OpenStreetMap contributors</string>
+    <string name="map_attribution" translatable="false">Map data © OpenStreetMap contributors · Map style © OpenTopoMap (CC BY-SA 3.0)</string>
     <string name="nearby_places">Nearby places</string>
     <string name="place_address">Address: %1$s</string>
     <string name="place_hours">Opening hours: %1$s</string>
