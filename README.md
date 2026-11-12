@@ -47,3 +47,11 @@ User guide (Russian): [docs/USER_GUIDE_RU.md](docs/USER_GUIDE_RU.md) / [PDF](doc
 Diary notes are stored in SQLite (`NotesDb`): `insert` (create), `all` / `get` (read), `update`, `delete`.
 The Save / Delete buttons of the note editor call these methods through `MainViewModel`.
 On-device test: `.\gradlew.bat connectedDebugAndroidTest`. Video demo scenario: [VIDEO_RU.md](VIDEO_RU.md).
+
+## Publication, monetization and security
+- Monetization and publication plan (Russian): [docs/MONETIZATION_PLAN_RU.md](docs/MONETIZATION_PLAN_RU.md)
+- Security measures (Russian): [docs/SECURITY_RU.md](docs/SECURITY_RU.md)
+- Privacy policy draft (Russian): [docs/PRIVACY_POLICY_RU.md](docs/PRIVACY_POLICY_RU.md)
+
+Built-in protection: data stays on the phone, backups are disabled, HTTPS-only networking, parameterized SQL,
+minimal permissions and a "Delete all my data" button in the profile.

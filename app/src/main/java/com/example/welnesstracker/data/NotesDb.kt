@@ -85,6 +85,9 @@ class NotesDb(context: Context, name: String? = DEFAULT_NAME) :
         return writableDatabase.delete("notes", "id = ?", arrayOf(id.toString()))
     }
 
+    /** DELETE all notes (used by "Delete all my data"). */
+    fun deleteAll(): Int = writableDatabase.delete("notes", null, null)
+
     companion object {
         const val DEFAULT_NAME = "wellness.db"
         private const val DB_VERSION = 1

@@ -10,3 +10,6 @@
 .cxx
 .kotlin
 local.properties
+*.jks
+*.keystore
+keystore.properties

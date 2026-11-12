@@ -120,6 +120,13 @@ class WellnessRepository(context: Context) {
         }
     }
 
+    /** Removes the profile, all daily entries and the step-counter baseline from the phone. */
+    fun clearAll() {
+        synchronized(LOCK) {
+            prefs.edit().clear().apply()
+        }
+    }
+
     fun registerChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) =
         prefs.registerOnSharedPreferenceChangeListener(listener)
 

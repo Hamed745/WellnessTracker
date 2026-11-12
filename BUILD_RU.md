@@ -86,14 +86,29 @@ $adb = "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe"
 & $adb shell am start -n com.example.welnesstracker/.MainActivity
 ```
 
-## 7. Release-APK (необязательно)
+## 7. Release-сборка для публикации (необязательно)
+
+Для магазинов нужна подписанная release-версия. Ключ подписи создаётся один раз и хранится **вне репозитория**
+(файлы `*.jks` и `*.keystore` добавлены в `.gitignore`). Потеряв ключ, обновлять приложение будет невозможно,
+поэтому сделайте его резервную копию.
 
 ```powershell
-.\gradlew.bat assembleRelease
+# 1. Создать ключ подписи (один раз)
+& "$env:JAVA_HOME\bin\keytool.exe" -genkeypair -v -keystore wellness-release.jks -alias wellness -keyalg RSA -keysize 2048 -validity 10000
+
+# 2. Собрать release-APK (без подписи) и пакет AAB для Google Play
+.\gradlew.bat --no-daemon assembleRelease bundleRelease
+
+# 3. Выровнять и подписать APK (версию build-tools подставьте свою)
+$bt = (Get-ChildItem "$env:LOCALAPPDATA\Android\Sdk\build-tools" | Sort-Object Name | Select-Object -Last 1).FullName
+& "$bt\zipalign.exe" -p 4 app\build\outputs\apk\release\app-release-unsigned.apk app-release-aligned.apk
+& "$bt\apksigner.bat" sign --ks wellness-release.jks --out app-release.apk app-release-aligned.apk
+& "$bt\apksigner.bat" verify app-release.apk
 ```
 
-Файл `app/build/outputs/apk/release/app-release-unsigned.apk` не подписан. Чтобы его можно было установить,
-его нужно подписать (`keytool` + `apksigner` из Build-Tools). Для проверки работы достаточно debug-APK.
+Пакет AAB: `app/build/outputs/bundle/release/app-release.aab`. В Google Play его подписывает сам магазин
+(Play App Signing), а загружать нужно AAB, подписанный ключом загрузки. Перед публикацией включите сжатие и обфускацию R8
+(`isMinifyEnabled = true` в release-сборке) и обязательно проверьте release-версию на телефоне.
 
 ## 8. Частые ошибки
 

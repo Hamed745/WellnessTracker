@@ -104,6 +104,21 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         updateToday { it.copy(sleepMin = minutes.coerceIn(0, 24 * 60)) }
     }
 
+    /** Deletes everything the app stored on the phone: profile, daily data and diary notes. */
+    fun deleteAllData() {
+        repo.clearAll()
+        notesDb.deleteAll()
+        profile = UserProfile()
+        placesJob?.cancel()
+        weatherJob?.cancel()
+        placesKey = null
+        weatherCity = null
+        _places.value = PlacesState.NoCity
+        _weather.value = WeatherState.NoCity
+        _notes.value = notesDb.all()
+        publish()
+    }
+
     fun noteById(id: Long): Note? = _notes.value?.firstOrNull { it.id == id }
 
     /** Creates a note when [id] is negative, otherwise updates the existing one. */

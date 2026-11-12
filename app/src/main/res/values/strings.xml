@@ -167,4 +167,10 @@
     <string name="place_phone">Phone: %1$s</string>
     <string name="place_website">Website: %1$s</string>
     <string name="place_no_details">No additional details in OpenStreetMap.</string>
+
+    <!-- Privacy: delete all data -->
+    <string name="delete_data">Delete all my data</string>
+    <string name="delete_data_title">Delete all data?</string>
+    <string name="delete_data_message">Your profile, steps, water, sleep and diary notes will be removed from this phone. This cannot be undone.</string>
+    <string name="data_deleted">All data deleted</string>
 </resources>

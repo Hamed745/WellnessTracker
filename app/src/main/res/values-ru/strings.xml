@@ -162,4 +162,10 @@
     <string name="place_phone">Телефон: %1$s</string>
     <string name="place_website">Сайт: %1$s</string>
     <string name="place_no_details">В OpenStreetMap нет дополнительных сведений.</string>
+
+    <!-- Privacy: delete all data -->
+    <string name="delete_data">Удалить все мои данные</string>
+    <string name="delete_data_title">Удалить все данные?</string>
+    <string name="delete_data_message">Профиль, шаги, вода, сон и заметки дневника будут удалены с этого телефона. Это действие нельзя отменить.</string>
+    <string name="data_deleted">Все данные удалены</string>
 </resources>

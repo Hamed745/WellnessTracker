@@ -16,6 +16,7 @@ import com.example.welnesstracker.data.UserProfile
 import com.example.welnesstracker.databinding.FragmentProfileBinding
 import com.example.welnesstracker.domain.BmiCategory
 import com.example.welnesstracker.domain.HealthCalculator
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ProfileFragment : Fragment() {
 
@@ -46,16 +47,7 @@ class ProfileFragment : Fragment() {
 
         // Fill the form once from the saved profile.
         val p = vm.state.value?.profile ?: UserProfile()
-        b.etName.setText(p.name)
-        b.etAge.setText(p.age.toString())
-        b.etHeight.setText(p.heightCm.toString())
-        b.etWeight.setText(trimWeight(p.weightKg))
-        b.etStepGoal.setText(p.stepGoal.toString())
-        b.etCity.setText(p.city)
-        sexIndex = savedInstanceState?.getInt(KEY_SEX) ?: p.sex.ordinal
-        activityIndex = savedInstanceState?.getInt(KEY_ACTIVITY) ?: p.activity.ordinal
-        b.actSex.setText(sexLabels[sexIndex], false)
-        b.actActivity.setText(activityLabels[activityIndex], false)
+        fillForm(p, savedInstanceState?.getInt(KEY_SEX) ?: p.sex.ordinal, savedInstanceState?.getInt(KEY_ACTIVITY) ?: p.activity.ordinal)
 
         b.tvFirstRun.visibility = if (vm.hasProfile) View.GONE else View.VISIBLE
 
@@ -68,12 +60,42 @@ class ProfileFragment : Fragment() {
         b.actActivity.setOnItemClickListener { _, _, position, _ -> activityIndex = position; preview() }
         preview()
 
+        b.btnDeleteData.setOnClickListener { confirmDeleteAllData() }
+
         b.btnSave.setOnClickListener {
             val profile = readForm(showErrors = true) ?: return@setOnClickListener
             vm.saveProfile(profile)
             b.tvFirstRun.visibility = View.GONE
             Toast.makeText(requireContext(), R.string.profile_saved, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun fillForm(p: UserProfile, sex: Int, activity: Int) {
+        b.etName.setText(p.name)
+        b.etAge.setText(p.age.toString())
+        b.etHeight.setText(p.heightCm.toString())
+        b.etWeight.setText(trimWeight(p.weightKg))
+        b.etStepGoal.setText(p.stepGoal.toString())
+        b.etCity.setText(p.city)
+        sexIndex = sex
+        activityIndex = activity
+        b.actSex.setText(sexLabels[sexIndex], false)
+        b.actActivity.setText(activityLabels[activityIndex], false)
+    }
+
+    private fun confirmDeleteAllData() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.delete_data_title)
+            .setMessage(R.string.delete_data_message)
+            .setPositiveButton(R.string.delete) { _, _ ->
+                vm.deleteAllData()
+                val defaults = UserProfile()
+                fillForm(defaults, defaults.sex.ordinal, defaults.activity.ordinal)
+                b.tvFirstRun.visibility = View.VISIBLE
+                Toast.makeText(requireContext(), R.string.data_deleted, Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     /** Reads and validates the form; returns null if any field is invalid. */
