@@ -22,7 +22,9 @@ jobs:
       - name: Install Android 36 platform
         run: |
           echo "Android SDK: $ANDROID_HOME"
-          sdkmanager "platforms;android-36" "build-tools;36.0.0"
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)"
+          test -n "$SDKMANAGER"
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" "platforms;android-36" "build-tools;36.0.0"
       - name: Test and build APK
         run: |
           chmod +x ./gradlew
