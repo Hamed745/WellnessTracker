@@ -55,3 +55,12 @@ On-device test: `.\gradlew.bat connectedDebugAndroidTest`. Video demo scenario: 
 
 Built-in protection: data stays on the phone, backups are disabled, HTTPS-only networking, parameterized SQL,
 minimal permissions and a "Delete all my data" button in the profile.
+
+## Map reliability (v1.6.1)
+The Map tab identifies WellnessTracker in tile/API requests, uses HTTPS, keeps the osmdroid
+local tile cache, and offers an in-app retry for nearby places. Nearby place requests use
+HTTP POST to Overpass; if the primary server is temporarily unavailable (timeout/5xx), a
+second public instance may be tried. Access-denied and rate-limit responses (4xx, including
+403/429) are **not** bypassed. If the tile provider is unavailable, use the existing
+"Search nearby in maps app" action. OSM tiles are best-effort and not guaranteed.
+

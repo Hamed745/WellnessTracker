@@ -2,6 +2,7 @@ package com.example.welnesstracker.ui
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,7 @@ import com.example.welnesstracker.network.PlacesService
 import com.example.welnesstracker.network.PlacesState
 import com.example.welnesstracker.network.WeatherService
 import com.example.welnesstracker.network.WeatherState
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -160,7 +162,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                     } else {
                         PlacesState.Success(center, PlacesService.fetch(center.lat, center.lon, category))
                     }
+                } catch (e: CancellationException) {
+                    throw e
                 } catch (e: Exception) {
+                    Log.e("WellnessPlaces", "Unable to load places for selected city", e)
                     PlacesState.Error
                 }
             }
